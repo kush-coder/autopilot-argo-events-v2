@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: trigger-store
+data:
+  workflow: |-
+    apiVersion: argoproj.io/v1alpha1
+    kind: Workflow
+    metadata:
+      generateName: hello-world-
+      namespace: argo-events
+    spec:
+      entrypoint: print-message
+      serviceAccountName: argo-events
+      templates:
+      - name: print-message
+        container:
+          image: busybox
+          command: [echo]
+          args: ["hello world"]
